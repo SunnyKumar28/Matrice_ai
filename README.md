@@ -328,237 +328,55 @@ Results are saved to JSON files (one JSON object per line) with the following fo
 }
 ```
 
-### Error Handling and Resilience
-
-**Automatic Retry Strategy:**
-- Client retries failed requests up to 3 times
-- Exponential backoff between retries
-- Handles network timeouts gracefully
-
-**Queue Overflow Protection:**
-- Queue size limit (100 frames) prevents memory overflow
-- Server returns 503 when queue is full
-- Client can implement backpressure handling
-
-**Health Monitoring:**
-- `/health` endpoint for service monitoring
-- `/metrics` endpoint for performance tracking
-- Automatic recovery from transient errors
-
-
 ## Scaling and Performance Considerations
 
 ### Performance Characteristics
 
-**Typical Performance (CPU):**
-- YOLOv8n (nano): ~50-100ms per frame, ~10-20 FPS
-- YOLOv8s (small): ~100-200ms per frame, ~5-10 FPS
-- YOLOv8m (medium): ~200-400ms per frame, ~2-5 FPS
+**Typical Performance:**
+- **CPU:** YOLOv8n ~50-100ms/frame (10-20 FPS), YOLOv8s ~100-200ms/frame (5-10 FPS)
+- **GPU:** YOLOv8n ~10-20ms/frame (50-100 FPS), YOLOv8s ~20-40ms/frame (25-50 FPS)
 
-**Typical Performance (GPU):**
-- YOLOv8n (nano): ~10-20ms per frame, ~50-100 FPS
-- YOLOv8s (small): ~20-40ms per frame, ~25-50 FPS
-- YOLOv8m (medium): ~40-80ms per frame, ~12-25 FPS
+*Performance varies based on hardware, input resolution, and number of detections*
 
-*Note: Performance varies based on hardware, input resolution, and number of detections*
+### Scaling Strategies
 
-### Horizontal Scaling
+**Horizontal Scaling:**
+- Deploy multiple server instances on different ports
+- Use load balancer (Nginx) to distribute requests
+- Distribute clients across multiple servers
 
-**Load Balancing Multiple Servers:**
+**Vertical Scaling:**
+- Increase thread pool size in `server.py` (default: 4 workers)
+- Use GPU for 10x performance improvement
+- Select appropriate model: yolov8n (fastest) to yolov8x (most accurate)
+- Lower input resolution for faster inference
 
-1. **Deploy multiple server instances:**
-   ```bash
-   # Server 1
-   python server.py --port 8000
-   
-   # Server 2
-   python server.py --port 8001
-   
-   # Server 3
-   python server.py --port 8002
-   ```
+**Multi-Stream Processing:**
+- Run multiple client instances connecting to same server
+- Server queue handles concurrent requests from all streams
+- Each stream processed independently by thread pool
 
-2. **Use a load balancer (Nginx example):**
-   ```nginx
-   upstream inference_servers {
-       server localhost:8000;
-       server localhost:8001;
-       server localhost:8002;
-   }
-   
-   server {
-       listen 80;
-       location / {
-           proxy_pass http://inference_servers;
-       }
-   }
-   ```
+### Optimization Tips
 
-3. **Distribute clients across servers:**
-   ```bash
-   # Client 1 -> Server 1
-   python client.py --server http://localhost:8000 --source 0
-   
-   # Client 2 -> Server 2
-   python client.py --server http://localhost:8001 --source 1
-   ```
+- **Latency:** Use GPU, minimize buffering, smaller model, lower resolution
+- **Throughput:** Increase thread pool, deploy multiple servers, faster hardware
+- **Resource Management:** Monitor memory, set queue limits, use CPU-only if GPU limited
 
-**Message Queue for Distributed Processing:**
-- Use Redis/RabbitMQ to distribute inference tasks
-- Multiple workers consume from queue
-- Better for high-volume, non-real-time processing
+### Monitoring
 
-### Vertical Scaling
+Access metrics: `curl http://localhost:8000/metrics`
 
-**Optimize Single Server Performance:**
-
-1. **Increase Thread Pool Size:**
-   ```python
-   # In server.py, modify:
-   executor = ThreadPoolExecutor(max_workers=8)  # Increase from 4
-   ```
-
-2. **Use Larger GPU:**
-   - More GPU memory allows batch processing
-   - Multiple models can run simultaneously
-   - Higher throughput for concurrent requests
-
-3. **Model Selection:**
-   - **yolov8n.pt**: Fastest, lowest accuracy, best for real-time
-   - **yolov8s.pt**: Balanced speed/accuracy
-   - **yolov8m.pt**: Higher accuracy, slower
-   - **yolov8l/x.pt**: Highest accuracy, slowest (not recommended for real-time)
-
-4. **Input Resolution:**
-   - Lower resolution = faster inference
-   - 640x480: Good balance
-   - 1280x720: Higher accuracy, slower
-   - 1920x1080: Best accuracy, slowest
-
-### Multi-Stream Processing
-
-**Running Multiple Clients:**
-
-```bash
-# Terminal 1: Process webcam 0
-python client.py --server http://localhost:8000 --source 0 --stream-name webcam_0
-
-# Terminal 2: Process webcam 1
-python client.py --server http://localhost:8000 --source 1 --stream-name webcam_1
-
-# Terminal 3: Process video file
-python client.py --server http://localhost:8000 --source video.mp4 --stream-name video_1
-```
-
-**Server handles multiple streams concurrently:**
-- Each stream processed independently
-- Queue manages requests from all streams
-- Thread pool processes frames in parallel
-
-### Performance Optimization Strategies
-
-**1. Latency Optimization:**
-- Use GPU when available (10x faster than CPU)
-- Minimize frame buffering (set `CAP_PROP_BUFFERSIZE=1`)
-- Use smaller model (yolov8n.pt) for real-time applications
-- Reduce input resolution if acceptable
-- Run server and client on same machine to reduce network latency
-
-**2. Throughput Optimization:**
-- Increase thread pool size (more concurrent inferences)
-- Use batch processing if latency allows
-- Deploy multiple server instances
-- Use faster hardware (GPU, more CPU cores)
-- Optimize network (local network vs. internet)
-
-**3. Resource Management:**
-- Monitor memory usage (large models consume RAM)
-- Set queue size limits to prevent memory overflow
-- Use CPU-only mode if GPU memory is limited
-- Implement request rate limiting for public APIs
-
-**4. Scalability Patterns:**
-
-**Pattern 1: Single Server, Multiple Clients**
-```
-Client 1 ──┐
-Client 2 ──┼──> Server (1 instance)
-Client 3 ──┘
-```
-- Good for: Small deployments, local networks
-- Limitation: Single point of failure, limited by server capacity
-
-**Pattern 2: Load Balanced Servers**
-```
-Client 1 ──┐
-Client 2 ──┼──> Load Balancer ──> Server 1
-Client 3 ──┘                    Server 2
-                                 Server 3
-```
-- Good for: High availability, high throughput
-- Benefit: Fault tolerance, horizontal scaling
-
-**Pattern 3: Distributed Processing**
-```
-Client 1 ──> Server 1 (Stream A)
-Client 2 ──> Server 2 (Stream B)
-Client 3 ──> Server 3 (Stream C)
-```
-- Good for: Geographic distribution, dedicated resources
-- Benefit: Isolation, predictable performance per stream
-
-### Monitoring and Metrics
-
-**Key Metrics to Monitor:**
-- **Latency:** Average inference time per frame
-- **Throughput:** Frames processed per second
-- **Queue Size:** Number of pending inference requests
-- **Error Rate:** Failed requests / total requests
-- **Resource Usage:** CPU, GPU, Memory utilization
-
-**Access Metrics:**
-```bash
-curl http://localhost:8000/metrics
-```
-
-**Set Up Alerts:**
-- Alert if latency > 200ms
-- Alert if queue size > 50
-- Alert if error rate > 5%
-- Alert if server health check fails
-
-## Experimental Results
-
-Results are saved to the `results/` directory as JSON files. Each line contains one inference result with:
-- Timestamp
-- Frame ID
-- Stream name
-- Latency (milliseconds)
-- Detections (label, confidence, bounding box)
+Key metrics: Latency, throughput, queue size, error rate, resource usage
 
 ## Troubleshooting
 
-### Server not starting
-- Check if port 8000 is available
-- Verify model file exists or can be downloaded
-- Check CUDA availability for GPU acceleration
+**Server not starting:** Check port availability, verify model download, check CUDA
 
-### Client connection issues
-- Verify server is running and accessible
-- Check network connectivity for RTSP streams
-- Verify server URL is correct
+**Client connection issues:** Verify server running, check network, verify server URL
 
-### Low FPS
-- Reduce input resolution
-- Use smaller YOLOv8 model (yolov8n.pt)
-- Enable GPU acceleration
-- Increase thread pool size
+**Low FPS:** Reduce resolution, use yolov8n.pt, enable GPU, increase thread pool
 
-### High latency
-- Check network latency for RTSP streams
-- Verify GPU is being used (if available)
-- Reduce queue size to process faster
-- Optimize frame processing
+**High latency:** Check network, verify GPU usage, reduce queue size
 
 ## License
 
