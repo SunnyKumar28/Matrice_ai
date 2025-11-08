@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  inference-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yolov8-inference-server
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./results:/app/results
+      # Mount video files if needed
+      # - ./videos:/app/videos
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python server.py --host 0.0.0.0 --port 8000 --model yolov8n.pt --device auto
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+

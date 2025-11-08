@@ -30,12 +30,30 @@ The system is organized into two main modules:
 
 ## System Requirements
 
-- Python 3.8+
+- Python 3.8+ (for local installation)
+- OR Docker (for containerized deployment)
 - CUDA-capable GPU (optional, for GPU acceleration)
 - Sufficient RAM for video processing
 - Network connectivity (for RTSP streams)
 
 ## Installation
+
+### Option 1: Docker (Recommended for Easy Deployment)
+
+```bash
+# Build Docker image
+docker build -t yolov8-inference-server .
+
+# Run with Docker Compose
+docker-compose up -d
+
+# Or run directly
+docker run -d -p 8000:8000 -v $(pwd)/results:/app/results yolov8-inference-server
+```
+
+See [DOCKER.md](DOCKER.md) for detailed Docker instructions.
+
+### Option 2: Local Installation
 
 1. Clone the repository:
 ```bash
