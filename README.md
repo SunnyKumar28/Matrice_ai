@@ -363,26 +363,11 @@ Results are saved to JSON files (one JSON object per line) with the following fo
 - **Resource Management:** Monitor memory, set queue limits, use CPU-only if GPU limited
 
 ### Monitoring
-
 Access metrics: `curl http://localhost:8000/metrics`
+
 
 Key metrics: Latency, throughput, queue size, error rate, resource usage
 
-## Troubleshooting
+\
 
-**Server not starting:** Check port availability, verify model download, check CUDA
-
-**Client connection issues:** Verify server running, check network, verify server URL
-
-**Low FPS:** Reduce resolution, use yolov8n.pt, enable GPU, increase thread pool
-
-**High latency:** Check network, verify GPU usage, reduce queue size
-
-## License
-
-This project is provided as-is for educational and research purposes.
-
-## Contributing
-
-Contributions are welcome! Please ensure code follows the existing style and includes appropriate tests and documentation.
 
