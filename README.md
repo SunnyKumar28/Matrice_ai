@@ -5,28 +5,196 @@ A high-performance real-time video inference system using YOLOv8 that achieves m
 ## Overview
 
 This system implements a streaming inference pipeline that:
-- Consumes live video input (RTSP stream or webcam)
+- Consumes live video input (RTSP stream, webcam, or video files)
 - Performs continuous object detection with YOLOv8
 - Emits inference results through a lightweight REST API
 - Achieves low end-to-end latency and high sustainable FPS
 - Maintains stable, predictable performance under variable load
 
-## Architecture
+## How to Run the System
 
-The system is organized into two main modules:
+### Quick Start
 
-### `server.py`
-- Handles real-time inference using a pretrained YOLOv8 model
-- Manages the streaming pipeline, performance metrics, and serving of results
-- Provides REST API endpoints for inference requests
-- Implements async processing with queue-based architecture for maximum throughput
+**1. Start the Server**
+
+```bash
+# Using Python directly
+python server.py --host 0.0.0.0 --port 8000 --model yolov8n.pt --device auto
+
+# Or using Docker
+docker-compose up -d
+```
+
+**2. Run the Client**
+
+```bash
+# Process webcam feed
+python client.py --server http://localhost:8000 --source 0 --stream-name webcam
+
+# Process video file
+python client.py --server http://localhost:8000 --source video.mp4 --stream-name video_1
+
+# Process RTSP stream
+python client.py --server http://localhost:8000 --source rtsp://example.com/stream --stream-name cam_1
+```
+
+**3. Check Results**
+
+Results are automatically saved to `results/` directory as JSON files.
+
+### Detailed Setup Instructions
+
+#### Prerequisites
+
+- Python 3.8+ or Docker
+- 4GB+ RAM recommended
+- GPU optional (CPU works, GPU significantly faster)
+
+#### Installation Steps
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd Matrice
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Start the server:**
+   ```bash
+   python server.py --host 0.0.0.0 --port 8000
+   ```
+
+4. **In another terminal, run the client:**
+   ```bash
+   python client.py --server http://localhost:8000 --source 0 --stream-name webcam
+   ```
+
+### Running with Docker
+
+```bash
+# Build and start
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop
+docker-compose down
+```
+
+### Running on Cloud (Render, AWS, etc.)
+
+See deployment-specific documentation in the repository for cloud deployment instructions.
+
+## Architecture Overview
+
+### System Components
+
+The system consists of two main components that communicate via REST API:
+
+```
+┌─────────────┐         HTTP/REST          ┌─────────────┐
+│   Client    │ ──────────────────────────> │   Server    │
+│  (client.py)│                             │ (server.py) │
+│             │ <────────────────────────── │             │
+│             │      Inference Results      │             │
+└─────────────┘                             └─────────────┘
+      │                                            │
+      │                                            │
+      ▼                                            ▼
+  Video Source                                YOLOv8 Model
+  (Webcam/RTSP/File)                          (Loaded Once)
+```
+
+### Component Details
+
+#### `server.py` - Inference Server
+
+**Responsibilities:**
+- Loads YOLOv8 model once at startup (singleton pattern)
+- Receives frame data via REST API
+- Performs object detection inference
+- Returns detection results with metadata
 - Tracks performance metrics (latency, FPS, throughput)
+- Manages async inference queue for concurrent processing
 
-### `client.py`
-- Ingests one or more streams (RTSP, webcam, or video files)
-- Sends frames for inference to the server
-- Retrieves results in real-time
-- Saves results to JSON files in the specified format
+**Key Features:**
+- FastAPI-based REST API
+- Async request handling with queue-based processing
+- Thread pool executor for CPU-bound inference operations
+- Automatic GPU detection and utilization
+- Health check and metrics endpoints
+
+#### `client.py` - Stream Processor
+
+**Responsibilities:**
+- Captures frames from video sources (webcam, RTSP, files)
+- Sends frames to inference server via HTTP
+- Receives and processes inference results
+- Saves results to JSON files
+- Manages frame rate and connection retry logic
+
+**Key Features:**
+- Multi-source support (webcam, RTSP, video files)
+- Frame rate control
+- Automatic retry on connection failures
+- Real-time statistics tracking
+- JSON result persistence
+
+### Data Flow
+
+```
+1. Client captures frame from video source
+   ↓
+2. Client converts frame to RGB format
+   ↓
+3. Client sends frame data to server via POST /inference
+   ↓
+4. Server adds frame to inference queue
+   ↓
+5. Background worker processes frame with YOLOv8
+   ↓
+6. Server returns detection results to client
+   ↓
+7. Client saves results to JSON file
+```
+
+### Key Design Decisions
+
+#### 1. Model Loading Strategy
+- **Decision:** Load model once at startup, reuse for all requests
+- **Rationale:** Model loading is expensive (2-5 seconds). Loading once eliminates per-request overhead
+- **Impact:** Reduces latency from ~5000ms to ~50ms per request
+
+#### 2. Async Queue Architecture
+- **Decision:** Use async queue with thread pool executor
+- **Rationale:** 
+  - FastAPI handles HTTP requests asynchronously (non-blocking)
+  - Inference is CPU/GPU-bound, runs in separate threads
+  - Queue buffers requests during high load
+- **Impact:** Enables concurrent request handling, improves throughput
+
+#### 3. Single Model Instance
+- **Decision:** Global model variable, loaded once
+- **Rationale:** Model weights are large (~6MB for nano), sharing instance saves memory
+- **Impact:** Memory efficient, supports multiple concurrent streams
+
+#### 4. JSON Output Format
+- **Decision:** Save results as formatted JSON array
+- **Rationale:** Human-readable, easy to parse, matches assignment specification
+- **Impact:** Easy debugging and result analysis
+
+#### 5. Client-Server Separation
+- **Decision:** Separate client and server processes
+- **Rationale:** 
+  - Allows scaling server independently
+  - Multiple clients can connect to one server
+  - Client can run on different machines
+- **Impact:** Horizontal scalability, distributed processing capability
 
 ## System Requirements
 
@@ -199,87 +367,204 @@ Results are saved to JSON files (one JSON object per line) with the following fo
 }
 ```
 
-## Key Design Decisions
+### Error Handling and Resilience
 
-### 1. Model Loading
-- Model is loaded **once** at server startup and reused throughout runtime
-- This eliminates model loading overhead for each inference request
-- Supports GPU acceleration when available
+**Automatic Retry Strategy:**
+- Client retries failed requests up to 3 times
+- Exponential backoff between retries
+- Handles network timeouts gracefully
 
-### 2. Async Processing Architecture
-- Uses FastAPI's async capabilities for non-blocking request handling
-- Implements a queue-based system for inference processing
-- Separate thread pool for CPU-bound inference operations
-- Prevents blocking between capture, inference, and serving
+**Queue Overflow Protection:**
+- Queue size limit (100 frames) prevents memory overflow
+- Server returns 503 when queue is full
+- Client can implement backpressure handling
 
-### 3. Performance Optimization
-- Minimizes frame buffering to reduce latency
-- Implements frame rate control on client side
-- Uses efficient serialization (JSON) for API communication
-- Optimized YOLOv8 inference settings (verbose=False, conf threshold)
+**Health Monitoring:**
+- `/health` endpoint for service monitoring
+- `/metrics` endpoint for performance tracking
+- Automatic recovery from transient errors
 
-### 4. Scalability
-- Thread pool executor allows concurrent inference processing
-- Queue-based architecture supports multiple concurrent streams
-- Client can process multiple streams by running multiple instances
-- Server can handle multiple clients simultaneously
 
-### 5. Error Handling and Resilience
-- Automatic retry strategy for HTTP requests
-- Graceful error handling and logging
-- Server health checks
-- Timeout handling for inference requests
-- Queue overflow protection
+## Scaling and Performance Considerations
 
-### 6. Metrics and Monitoring
-- Real-time performance metrics tracking
-- Latency history for analysis
-- FPS calculation and monitoring
-- Comprehensive logging for debugging
+### Performance Characteristics
 
-## Performance Considerations
+**Typical Performance (CPU):**
+- YOLOv8n (nano): ~50-100ms per frame, ~10-20 FPS
+- YOLOv8s (small): ~100-200ms per frame, ~5-10 FPS
+- YOLOv8m (medium): ~200-400ms per frame, ~2-5 FPS
 
-### Latency Optimization
-- Model loaded once at startup (no reload overhead)
-- Async processing prevents blocking
-- Minimal frame buffering
-- Efficient queue management
-- Direct frame-to-inference pipeline
+**Typical Performance (GPU):**
+- YOLOv8n (nano): ~10-20ms per frame, ~50-100 FPS
+- YOLOv8s (small): ~20-40ms per frame, ~25-50 FPS
+- YOLOv8m (medium): ~40-80ms per frame, ~12-25 FPS
 
-### Throughput Optimization
-- Thread pool for parallel inference processing
-- Queue-based architecture for batch processing
-- Non-blocking API endpoints
-- Efficient resource utilization
-
-### Resource Utilization
-- GPU acceleration when available (automatic detection)
-- CPU fallback for systems without GPU
-- Configurable thread pool size
-- Memory-efficient frame processing
-
-### Stability
-- Error-tolerant design with retry mechanisms
-- Queue overflow protection
-- Graceful degradation under high load
-- Automatic recovery from errors
-
-## Scaling Considerations
+*Note: Performance varies based on hardware, input resolution, and number of detections*
 
 ### Horizontal Scaling
-- Run multiple server instances behind a load balancer
-- Distribute streams across multiple servers
-- Use message queue (Redis, RabbitMQ) for distributed processing
+
+**Load Balancing Multiple Servers:**
+
+1. **Deploy multiple server instances:**
+   ```bash
+   # Server 1
+   python server.py --port 8000
+   
+   # Server 2
+   python server.py --port 8001
+   
+   # Server 3
+   python server.py --port 8002
+   ```
+
+2. **Use a load balancer (Nginx example):**
+   ```nginx
+   upstream inference_servers {
+       server localhost:8000;
+       server localhost:8001;
+       server localhost:8002;
+   }
+   
+   server {
+       listen 80;
+       location / {
+           proxy_pass http://inference_servers;
+       }
+   }
+   ```
+
+3. **Distribute clients across servers:**
+   ```bash
+   # Client 1 -> Server 1
+   python client.py --server http://localhost:8000 --source 0
+   
+   # Client 2 -> Server 2
+   python client.py --server http://localhost:8001 --source 1
+   ```
+
+**Message Queue for Distributed Processing:**
+- Use Redis/RabbitMQ to distribute inference tasks
+- Multiple workers consume from queue
+- Better for high-volume, non-real-time processing
 
 ### Vertical Scaling
-- Increase thread pool size for more concurrent inferences
-- Use larger GPU memory for batch processing
-- Optimize model size (n/s/m/l/x) based on hardware
+
+**Optimize Single Server Performance:**
+
+1. **Increase Thread Pool Size:**
+   ```python
+   # In server.py, modify:
+   executor = ThreadPoolExecutor(max_workers=8)  # Increase from 4
+   ```
+
+2. **Use Larger GPU:**
+   - More GPU memory allows batch processing
+   - Multiple models can run simultaneously
+   - Higher throughput for concurrent requests
+
+3. **Model Selection:**
+   - **yolov8n.pt**: Fastest, lowest accuracy, best for real-time
+   - **yolov8s.pt**: Balanced speed/accuracy
+   - **yolov8m.pt**: Higher accuracy, slower
+   - **yolov8l/x.pt**: Highest accuracy, slowest (not recommended for real-time)
+
+4. **Input Resolution:**
+   - Lower resolution = faster inference
+   - 640x480: Good balance
+   - 1280x720: Higher accuracy, slower
+   - 1920x1080: Best accuracy, slowest
 
 ### Multi-Stream Processing
-- Run multiple client instances for different streams
-- Use process pool for CPU-intensive operations
-- Implement stream prioritization if needed
+
+**Running Multiple Clients:**
+
+```bash
+# Terminal 1: Process webcam 0
+python client.py --server http://localhost:8000 --source 0 --stream-name webcam_0
+
+# Terminal 2: Process webcam 1
+python client.py --server http://localhost:8000 --source 1 --stream-name webcam_1
+
+# Terminal 3: Process video file
+python client.py --server http://localhost:8000 --source video.mp4 --stream-name video_1
+```
+
+**Server handles multiple streams concurrently:**
+- Each stream processed independently
+- Queue manages requests from all streams
+- Thread pool processes frames in parallel
+
+### Performance Optimization Strategies
+
+**1. Latency Optimization:**
+- Use GPU when available (10x faster than CPU)
+- Minimize frame buffering (set `CAP_PROP_BUFFERSIZE=1`)
+- Use smaller model (yolov8n.pt) for real-time applications
+- Reduce input resolution if acceptable
+- Run server and client on same machine to reduce network latency
+
+**2. Throughput Optimization:**
+- Increase thread pool size (more concurrent inferences)
+- Use batch processing if latency allows
+- Deploy multiple server instances
+- Use faster hardware (GPU, more CPU cores)
+- Optimize network (local network vs. internet)
+
+**3. Resource Management:**
+- Monitor memory usage (large models consume RAM)
+- Set queue size limits to prevent memory overflow
+- Use CPU-only mode if GPU memory is limited
+- Implement request rate limiting for public APIs
+
+**4. Scalability Patterns:**
+
+**Pattern 1: Single Server, Multiple Clients**
+```
+Client 1 ──┐
+Client 2 ──┼──> Server (1 instance)
+Client 3 ──┘
+```
+- Good for: Small deployments, local networks
+- Limitation: Single point of failure, limited by server capacity
+
+**Pattern 2: Load Balanced Servers**
+```
+Client 1 ──┐
+Client 2 ──┼──> Load Balancer ──> Server 1
+Client 3 ──┘                    Server 2
+                                 Server 3
+```
+- Good for: High availability, high throughput
+- Benefit: Fault tolerance, horizontal scaling
+
+**Pattern 3: Distributed Processing**
+```
+Client 1 ──> Server 1 (Stream A)
+Client 2 ──> Server 2 (Stream B)
+Client 3 ──> Server 3 (Stream C)
+```
+- Good for: Geographic distribution, dedicated resources
+- Benefit: Isolation, predictable performance per stream
+
+### Monitoring and Metrics
+
+**Key Metrics to Monitor:**
+- **Latency:** Average inference time per frame
+- **Throughput:** Frames processed per second
+- **Queue Size:** Number of pending inference requests
+- **Error Rate:** Failed requests / total requests
+- **Resource Usage:** CPU, GPU, Memory utilization
+
+**Access Metrics:**
+```bash
+curl http://localhost:8000/metrics
+```
+
+**Set Up Alerts:**
+- Alert if latency > 200ms
+- Alert if queue size > 50
+- Alert if error rate > 5%
+- Alert if server health check fails
 
 ## Experimental Results
 
