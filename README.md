@@ -18,11 +18,7 @@ This system implements a streaming inference pipeline that:
 **1. Start the Server**
 
 ```bash
-# Using Python directly
 python server.py --host 0.0.0.0 --port 8000 --model yolov8n.pt --device auto
-
-# Or using Docker
-docker-compose up -d
 ```
 
 **2. Run the Client**
@@ -46,7 +42,7 @@ Results are automatically saved to `results/` directory as JSON files.
 
 #### Prerequisites
 
-- Python 3.8+ or Docker
+- Python 3.8+
 - 4GB+ RAM recommended
 - GPU optional (CPU works, GPU significantly faster)
 
@@ -72,23 +68,6 @@ Results are automatically saved to `results/` directory as JSON files.
    ```bash
    python client.py --server http://localhost:8000 --source 0 --stream-name webcam
    ```
-
-### Running with Docker
-
-```bash
-# Build and start
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop
-docker-compose down
-```
-
-### Running on Cloud (Render, AWS, etc.)
-
-See deployment-specific documentation in the repository for cloud deployment instructions.
 
 ## Architecture Overview
 
@@ -198,30 +177,12 @@ The system consists of two main components that communicate via REST API:
 
 ## System Requirements
 
-- Python 3.8+ (for local installation)
-- OR Docker (for containerized deployment)
+- Python 3.8+
 - CUDA-capable GPU (optional, for GPU acceleration)
 - Sufficient RAM for video processing
 - Network connectivity (for RTSP streams)
 
 ## Installation
-
-### Option 1: Docker (Recommended for Easy Deployment)
-
-```bash
-# Build Docker image
-docker build -t yolov8-inference-server .
-
-# Run with Docker Compose
-docker-compose up -d
-
-# Or run directly
-docker run -d -p 8000:8000 -v $(pwd)/results:/app/results yolov8-inference-server
-```
-
-See [DOCKER.md](DOCKER.md) for detailed Docker instructions.
-
-### Option 2: Local Installation
 
 1. Clone the repository:
 ```bash
