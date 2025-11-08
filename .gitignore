@@ -34,8 +34,8 @@ ENV/
 *~
 
 # Results and outputs
-results/
-*.json
+# results/  # Uncommented to include results
+# *.json    # Uncommented to include JSON result files
 *.log
 
 # Model files (large files, download automatically)

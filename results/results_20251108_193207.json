@@ -1,0 +1,654 @@
+[
+  {
+    "timestamp": 1762610521.5911372,
+    "frame_id": 0,
+    "stream_name": "webcam",
+    "latency_ms": 83.0,
+    "detections": [
+      { "label": "person", "conf": 0.89, "bbox": [146.97, 232.33, 510.52, 479.6] }
+    ]
+  },
+  {
+    "timestamp": 1762610522.2235172,
+    "frame_id": 1,
+    "stream_name": "webcam",
+    "latency_ms": 61.2,
+    "detections": [
+      { "label": "person", "conf": 0.91, "bbox": [146.76, 232.55, 509.13, 479.55] }
+    ]
+  },
+  {
+    "timestamp": 1762610522.7963784,
+    "frame_id": 2,
+    "stream_name": "webcam",
+    "latency_ms": 61.1,
+    "detections": [
+      { "label": "person", "conf": 0.92, "bbox": [142.76, 241.66, 472.34, 479.52] }
+    ]
+  },
+  {
+    "timestamp": 1762610523.3681087,
+    "frame_id": 3,
+    "stream_name": "webcam",
+    "latency_ms": 66.4,
+    "detections": [
+      { "label": "person", "conf": 0.78, "bbox": [152.78, 223.93, 511.32, 479.6] }
+    ]
+  },
+  {
+    "timestamp": 1762610523.971019,
+    "frame_id": 4,
+    "stream_name": "webcam",
+    "latency_ms": 61.4,
+    "detections": [
+      { "label": "person", "conf": 0.85, "bbox": [124.95, 187.79, 570.37, 479.54] }
+    ]
+  },
+  {
+    "timestamp": 1762610524.557625,
+    "frame_id": 5,
+    "stream_name": "webcam",
+    "latency_ms": 72.9,
+    "detections": [
+      { "label": "person", "conf": 0.81, "bbox": [138.44, 204.87, 513.8, 479.61] }
+    ]
+  },
+  {
+    "timestamp": 1762610525.1594057,
+    "frame_id": 6,
+    "stream_name": "webcam",
+    "latency_ms": 55.6,
+    "detections": [
+      { "label": "person", "conf": 0.91, "bbox": [133.82, 218.24, 498.25, 479.46] }
+    ]
+  },
+  {
+    "timestamp": 1762610525.7331507,
+    "frame_id": 7,
+    "stream_name": "webcam",
+    "latency_ms": 60.1,
+    "detections": [
+      { "label": "person", "conf": 0.93, "bbox": [141.23, 209.04, 516.7, 479.44] }
+    ]
+  },
+  {
+    "timestamp": 1762610526.3444235,
+    "frame_id": 8,
+    "stream_name": "webcam",
+    "latency_ms": 59.9,
+    "detections": [
+      { "label": "person", "conf": 0.68, "bbox": [129.69, 202.1, 515.8, 479.55] }
+    ]
+  },
+  {
+    "timestamp": 1762610526.9219692,
+    "frame_id": 9,
+    "stream_name": "webcam",
+    "latency_ms": 69.6,
+    "detections": [
+      { "label": "person", "conf": 0.89, "bbox": [137.46, 205.22, 518.25, 479.43] }
+    ]
+  },
+  {
+    "timestamp": 1762610527.5257995,
+    "frame_id": 10,
+    "stream_name": "webcam",
+    "latency_ms": 64.4,
+    "detections": [
+      { "label": "person", "conf": 0.71, "bbox": [172.09, 214.42, 514.24, 479.56] },
+      { "label": "cell phone", "conf": 0.36, "bbox": [302.21, 286.5, 414.32, 424.89] }
+    ]
+  },
+  {
+    "timestamp": 1762610528.1065593,
+    "frame_id": 11,
+    "stream_name": "webcam",
+    "latency_ms": 59.4,
+    "detections": [
+      { "label": "cell phone", "conf": 0.85, "bbox": [279.73, 270.39, 365.46, 409.5] },
+      { "label": "person", "conf": 0.83, "bbox": [179.79, 214.32, 514.73, 479.61] }
+    ]
+  },
+  {
+    "timestamp": 1762610528.6802702,
+    "frame_id": 12,
+    "stream_name": "webcam",
+    "latency_ms": 61.5,
+    "detections": [
+      { "label": "person", "conf": 0.84, "bbox": [170.1, 213.46, 515.84, 479.64] },
+      { "label": "cell phone", "conf": 0.35, "bbox": [285.37, 272.8, 356.99, 369.17] }
+    ]
+  },
+  {
+    "timestamp": 1762610529.2484932,
+    "frame_id": 13,
+    "stream_name": "webcam",
+    "latency_ms": 60.8,
+    "detections": [
+      { "label": "person", "conf": 0.84, "bbox": [176.02, 214.67, 516.92, 479.4] },
+      { "label": "remote", "conf": 0.43, "bbox": [269.66, 278.89, 384.11, 426.66] },
+      { "label": "cell phone", "conf": 0.33, "bbox": [270.74, 279.56, 383.94, 426.43] }
+    ]
+  },
+  {
+    "timestamp": 1762610529.8196816,
+    "frame_id": 14,
+    "stream_name": "webcam",
+    "latency_ms": 63.9,
+    "detections": [
+      { "label": "person", "conf": 0.86, "bbox": [206.46, 214.61, 518.37, 479.67] },
+      { "label": "cell phone", "conf": 0.36, "bbox": [265.58, 274.98, 398.45, 419.85] }
+    ]
+  },
+  {
+    "timestamp": 1762610530.3932421,
+    "frame_id": 15,
+    "stream_name": "webcam",
+    "latency_ms": 58.3,
+    "detections": [
+      { "label": "person", "conf": 0.78, "bbox": [180.07, 215.75, 516.75, 479.68] }
+    ]
+  },
+  {
+    "timestamp": 1762610531.018781,
+    "frame_id": 16,
+    "stream_name": "webcam",
+    "latency_ms": 61.1,
+    "detections": [
+      { "label": "person", "conf": 0.59, "bbox": [190.5, 214.65, 518.15, 479.73] },
+      { "label": "cell phone", "conf": 0.5, "bbox": [286.76, 271.04, 391.72, 427.14] },
+      { "label": "cell phone", "conf": 0.27, "bbox": [247.05, 272.31, 394.7, 435.11] }
+    ]
+  },
+  {
+    "timestamp": 1762610531.5855598,
+    "frame_id": 17,
+    "stream_name": "webcam",
+    "latency_ms": 64.3,
+    "detections": [
+      { "label": "person", "conf": 0.83, "bbox": [182.62, 216.43, 514.36, 479.72] },
+      { "label": "remote", "conf": 0.4, "bbox": [289.03, 278.51, 401.0, 420.77] },
+      { "label": "cell phone", "conf": 0.32, "bbox": [289.1, 280.19, 401.46, 423.03] }
+    ]
+  },
+  {
+    "timestamp": 1762610532.1580086,
+    "frame_id": 18,
+    "stream_name": "webcam",
+    "latency_ms": 59.0,
+    "detections": [
+      { "label": "person", "conf": 0.82, "bbox": [161.99, 216.19, 518.18, 479.58] }
+    ]
+  },
+  {
+    "timestamp": 1762610532.7229917,
+    "frame_id": 19,
+    "stream_name": "webcam",
+    "latency_ms": 54.9,
+    "detections": [
+      { "label": "person", "conf": 0.91, "bbox": [143.91, 213.39, 517.98, 479.46] }
+    ]
+  },
+  {
+    "timestamp": 1762610533.2833278,
+    "frame_id": 20,
+    "stream_name": "webcam",
+    "latency_ms": 54.2,
+    "detections": [
+      { "label": "person", "conf": 0.89, "bbox": [141.65, 211.07, 516.32, 479.5] }
+    ]
+  },
+  {
+    "timestamp": 1762610533.849256,
+    "frame_id": 21,
+    "stream_name": "webcam",
+    "latency_ms": 54.7,
+    "detections": [
+      { "label": "person", "conf": 0.85, "bbox": [139.8, 209.11, 516.82, 479.44] }
+    ]
+  },
+  {
+    "timestamp": 1762610534.4351623,
+    "frame_id": 22,
+    "stream_name": "webcam",
+    "latency_ms": 61.2,
+    "detections": [
+      { "label": "person", "conf": 0.88, "bbox": [140.92, 214.08, 517.23, 479.48] }
+    ]
+  },
+  {
+    "timestamp": 1762610535.003342,
+    "frame_id": 23,
+    "stream_name": "webcam",
+    "latency_ms": 64.0,
+    "detections": [
+      { "label": "person", "conf": 0.91, "bbox": [134.56, 216.43, 519.61, 479.46] }
+    ]
+  },
+  {
+    "timestamp": 1762610535.5730257,
+    "frame_id": 24,
+    "stream_name": "webcam",
+    "latency_ms": 59.6,
+    "detections": [
+    ]
+  },
+  {
+    "timestamp": 1762610536.137013,
+    "frame_id": 25,
+    "stream_name": "webcam",
+    "latency_ms": 59.6,
+    "detections": [
+      { "label": "person", "conf": 0.64, "bbox": [171.3, 200.49, 564.7, 479.74] }
+    ]
+  },
+  {
+    "timestamp": 1762610536.7104423,
+    "frame_id": 26,
+    "stream_name": "webcam",
+    "latency_ms": 61.8,
+    "detections": [
+      { "label": "person", "conf": 0.78, "bbox": [153.34, 196.54, 548.0, 479.73] },
+      { "label": "cell phone", "conf": 0.73, "bbox": [265.52, 208.55, 406.12, 393.79] }
+    ]
+  },
+  {
+    "timestamp": 1762610537.2759445,
+    "frame_id": 27,
+    "stream_name": "webcam",
+    "latency_ms": 83.2,
+    "detections": [
+      { "label": "person", "conf": 0.6, "bbox": [151.78, 199.79, 548.86, 479.69] }
+    ]
+  },
+  {
+    "timestamp": 1762610537.8970041,
+    "frame_id": 28,
+    "stream_name": "webcam",
+    "latency_ms": 60.5,
+    "detections": [
+      { "label": "person", "conf": 0.62, "bbox": [154.2, 194.71, 532.8, 479.55] }
+    ]
+  },
+  {
+    "timestamp": 1762610538.4616156,
+    "frame_id": 29,
+    "stream_name": "webcam",
+    "latency_ms": 59.7,
+    "detections": [
+      { "label": "cell phone", "conf": 0.58, "bbox": [221.85, 201.86, 473.82, 452.84] },
+      { "label": "person", "conf": 0.51, "bbox": [243.12, 197.69, 531.28, 479.59] },
+      { "label": "person", "conf": 0.28, "bbox": [180.59, 249.57, 540.13, 480.0] }
+    ]
+  },
+  {
+    "timestamp": 1762610539.0392592,
+    "frame_id": 30,
+    "stream_name": "webcam",
+    "latency_ms": 109.4,
+    "detections": [
+      { "label": "person", "conf": 0.48, "bbox": [143.53, 202.4, 487.51, 479.6] }
+    ]
+  },
+  {
+    "timestamp": 1762610539.6530874,
+    "frame_id": 31,
+    "stream_name": "webcam",
+    "latency_ms": 64.8,
+    "detections": [
+      { "label": "person", "conf": 0.86, "bbox": [137.15, 210.28, 532.2, 479.45] }
+    ]
+  },
+  {
+    "timestamp": 1762610540.225176,
+    "frame_id": 32,
+    "stream_name": "webcam",
+    "latency_ms": 71.4,
+    "detections": [
+      { "label": "person", "conf": 0.89, "bbox": [139.77, 212.63, 534.16, 479.46] }
+    ]
+  },
+  {
+    "timestamp": 1762610540.8058348,
+    "frame_id": 33,
+    "stream_name": "webcam",
+    "latency_ms": 54.6,
+    "detections": [
+      { "label": "person", "conf": 0.86, "bbox": [143.89, 210.27, 535.13, 479.49] }
+    ]
+  },
+  {
+    "timestamp": 1762610541.393052,
+    "frame_id": 34,
+    "stream_name": "webcam",
+    "latency_ms": 61.8,
+    "detections": [
+      { "label": "person", "conf": 0.92, "bbox": [147.1, 210.22, 527.38, 479.46] }
+    ]
+  },
+  {
+    "timestamp": 1762610541.959114,
+    "frame_id": 35,
+    "stream_name": "webcam",
+    "latency_ms": 61.4,
+    "detections": [
+      { "label": "person", "conf": 0.91, "bbox": [146.42, 211.1, 528.31, 479.45] }
+    ]
+  },
+  {
+    "timestamp": 1762610542.5265179,
+    "frame_id": 36,
+    "stream_name": "webcam",
+    "latency_ms": 71.4,
+    "detections": [
+      { "label": "bottle", "conf": 0.75, "bbox": [272.39, 208.62, 375.99, 475.53] },
+      { "label": "person", "conf": 0.43, "bbox": [150.11, 214.36, 518.59, 479.71] }
+    ]
+  },
+  {
+    "timestamp": 1762610543.1004019,
+    "frame_id": 37,
+    "stream_name": "webcam",
+    "latency_ms": 55.7,
+    "detections": [
+      { "label": "person", "conf": 0.53, "bbox": [205.82, 214.03, 515.66, 479.74] },
+      { "label": "person", "conf": 0.26, "bbox": [177.51, 116.59, 513.39, 479.6] }
+    ]
+  },
+  {
+    "timestamp": 1762610543.6650856,
+    "frame_id": 38,
+    "stream_name": "webcam",
+    "latency_ms": 57.0,
+    "detections": [
+      { "label": "person", "conf": 0.59, "bbox": [169.88, 222.32, 517.93, 479.62] },
+      { "label": "bottle", "conf": 0.5, "bbox": [266.49, 85.3, 377.15, 423.25] }
+    ]
+  },
+  {
+    "timestamp": 1762610544.2256007,
+    "frame_id": 39,
+    "stream_name": "webcam",
+    "latency_ms": 65.2,
+    "detections": [
+      { "label": "bottle", "conf": 0.74, "bbox": [303.53, 269.95, 401.34, 479.56] },
+      { "label": "person", "conf": 0.26, "bbox": [276.8, 224.98, 420.63, 394.67] }
+    ]
+  },
+  {
+    "timestamp": 1762610544.8210316,
+    "frame_id": 40,
+    "stream_name": "webcam",
+    "latency_ms": 56.7,
+    "detections": [
+      { "label": "person", "conf": 0.48, "bbox": [211.83, 224.71, 530.09, 478.98] },
+      { "label": "person", "conf": 0.4, "bbox": [273.38, 224.47, 419.13, 353.81] }
+    ]
+  },
+  {
+    "timestamp": 1762610545.3824596,
+    "frame_id": 41,
+    "stream_name": "webcam",
+    "latency_ms": 53.6,
+    "detections": [
+      { "label": "person", "conf": 0.37, "bbox": [273.81, 222.69, 420.31, 363.82] }
+    ]
+  },
+  {
+    "timestamp": 1762610545.939133,
+    "frame_id": 42,
+    "stream_name": "webcam",
+    "latency_ms": 62.2,
+    "detections": [
+      { "label": "person", "conf": 0.56, "bbox": [118.56, 217.43, 515.81, 479.48] }
+    ]
+  },
+  {
+    "timestamp": 1762610546.5018642,
+    "frame_id": 43,
+    "stream_name": "webcam",
+    "latency_ms": 61.2,
+    "detections": [
+      { "label": "person", "conf": 0.5, "bbox": [264.26, 188.09, 640.0, 479.55] }
+    ]
+  },
+  {
+    "timestamp": 1762610547.081922,
+    "frame_id": 44,
+    "stream_name": "webcam",
+    "latency_ms": 55.8,
+    "detections": [
+      { "label": "person", "conf": 0.42, "bbox": [113.27, 217.54, 429.4, 478.89] }
+    ]
+  },
+  {
+    "timestamp": 1762610547.6379592,
+    "frame_id": 45,
+    "stream_name": "webcam",
+    "latency_ms": 55.9,
+    "detections": [
+      { "label": "person", "conf": 0.65, "bbox": [272.37, 217.86, 517.23, 479.7] }
+    ]
+  },
+  {
+    "timestamp": 1762610548.2217107,
+    "frame_id": 46,
+    "stream_name": "webcam",
+    "latency_ms": 62.3,
+    "detections": [
+      { "label": "person", "conf": 0.89, "bbox": [134.44, 216.63, 520.27, 479.42] }
+    ]
+  },
+  {
+    "timestamp": 1762610549.6791131,
+    "frame_id": 47,
+    "stream_name": "webcam",
+    "latency_ms": 54.7,
+    "detections": [
+      { "label": "person", "conf": 0.91, "bbox": [143.85, 210.36, 528.03, 479.44] }
+    ]
+  },
+  {
+    "timestamp": 1762610550.2396586,
+    "frame_id": 48,
+    "stream_name": "webcam",
+    "latency_ms": 67.0,
+    "detections": [
+      { "label": "person", "conf": 0.88, "bbox": [155.8, 219.95, 515.51, 479.5] }
+    ]
+  },
+  {
+    "timestamp": 1762610550.813482,
+    "frame_id": 49,
+    "stream_name": "webcam",
+    "latency_ms": 64.7,
+    "detections": [
+      { "label": "person", "conf": 0.75, "bbox": [171.94, 224.65, 618.73, 479.75] },
+      { "label": "person", "conf": 0.44, "bbox": [120.96, 418.35, 176.54, 479.81] }
+    ]
+  },
+  {
+    "timestamp": 1762610551.3909416,
+    "frame_id": 50,
+    "stream_name": "webcam",
+    "latency_ms": 67.5,
+    "detections": [
+      { "label": "keyboard", "conf": 0.77, "bbox": [140.75, 417.32, 636.14, 479.7] },
+      { "label": "keyboard", "conf": 0.52, "bbox": [118.51, 389.61, 639.44, 479.74] },
+      { "label": "person", "conf": 0.33, "bbox": [259.5, 224.81, 477.89, 432.45] }
+    ]
+  },
+  {
+    "timestamp": 1762610551.9737766,
+    "frame_id": 51,
+    "stream_name": "webcam",
+    "latency_ms": 134.2,
+    "detections": [
+      { "label": "keyboard", "conf": 0.91, "bbox": [118.38, 388.68, 577.87, 479.9] },
+      { "label": "person", "conf": 0.77, "bbox": [267.92, 221.21, 415.66, 395.26] }
+    ]
+  },
+  {
+    "timestamp": 1762610552.6117988,
+    "frame_id": 52,
+    "stream_name": "webcam",
+    "latency_ms": 54.8,
+    "detections": [
+      { "label": "keyboard", "conf": 0.74, "bbox": [113.24, 309.94, 631.73, 479.82] },
+      { "label": "cat", "conf": 0.35, "bbox": [275.17, 216.73, 427.03, 321.61] }
+    ]
+  },
+  {
+    "timestamp": 1762610553.673679,
+    "frame_id": 53,
+    "stream_name": "webcam",
+    "latency_ms": 54.0,
+    "detections": [
+      { "label": "keyboard", "conf": 0.72, "bbox": [53.54, 283.21, 557.46, 460.38] }
+    ]
+  },
+  {
+    "timestamp": 1762610554.2478464,
+    "frame_id": 54,
+    "stream_name": "webcam",
+    "latency_ms": 56.9,
+    "detections": [
+      { "label": "person", "conf": 0.8, "bbox": [122.55, 219.1, 556.26, 479.53] }
+    ]
+  },
+  {
+    "timestamp": 1762610554.8094418,
+    "frame_id": 55,
+    "stream_name": "webcam",
+    "latency_ms": 57.1,
+    "detections": [
+      { "label": "person", "conf": 0.9, "bbox": [125.35, 213.81, 552.57, 479.45] }
+    ]
+  },
+  {
+    "timestamp": 1762610555.3852646,
+    "frame_id": 56,
+    "stream_name": "webcam",
+    "latency_ms": 55.9,
+    "detections": [
+      { "label": "person", "conf": 0.85, "bbox": [122.76, 210.8, 554.45, 479.47] }
+    ]
+  },
+  {
+    "timestamp": 1762610555.9414768,
+    "frame_id": 57,
+    "stream_name": "webcam",
+    "latency_ms": 67.0,
+    "detections": [
+      { "label": "person", "conf": 0.9, "bbox": [143.9, 210.78, 533.43, 479.49] }
+    ]
+  },
+  {
+    "timestamp": 1762610556.508741,
+    "frame_id": 58,
+    "stream_name": "webcam",
+    "latency_ms": 56.0,
+    "detections": [
+      { "label": "person", "conf": 0.91, "bbox": [177.9, 210.51, 525.1, 479.53] }
+    ]
+  },
+  {
+    "timestamp": 1762610557.0768604,
+    "frame_id": 59,
+    "stream_name": "webcam",
+    "latency_ms": 76.9,
+    "detections": [
+      { "label": "person", "conf": 0.87, "bbox": [149.33, 209.75, 534.19, 479.55] }
+    ]
+  },
+  {
+    "timestamp": 1762610557.7227945,
+    "frame_id": 60,
+    "stream_name": "webcam",
+    "latency_ms": 111.3,
+    "detections": [
+      { "label": "person", "conf": 0.9, "bbox": [140.58, 207.14, 529.02, 479.52] }
+    ]
+  },
+  {
+    "timestamp": 1762610558.3465674,
+    "frame_id": 61,
+    "stream_name": "webcam",
+    "latency_ms": 57.1,
+    "detections": [
+      { "label": "person", "conf": 0.92, "bbox": [144.48, 205.84, 533.08, 479.54] }
+    ]
+  },
+  {
+    "timestamp": 1762610559.5044982,
+    "frame_id": 62,
+    "stream_name": "webcam",
+    "latency_ms": 82.1,
+    "detections": [
+      { "label": "person", "conf": 0.91, "bbox": [145.35, 205.18, 536.98, 479.5] }
+    ]
+  },
+  {
+    "timestamp": 1762610560.1297324,
+    "frame_id": 63,
+    "stream_name": "webcam",
+    "latency_ms": 56.2,
+    "detections": [
+      { "label": "person", "conf": 0.9, "bbox": [142.78, 204.53, 532.43, 479.6] }
+    ]
+  },
+  {
+    "timestamp": 1762610560.7122831,
+    "frame_id": 64,
+    "stream_name": "webcam",
+    "latency_ms": 56.0,
+    "detections": [
+      { "label": "person", "conf": 0.9, "bbox": [146.72, 205.37, 531.12, 479.52] }
+    ]
+  },
+  {
+    "timestamp": 1762610561.2746618,
+    "frame_id": 65,
+    "stream_name": "webcam",
+    "latency_ms": 53.7,
+    "detections": [
+      { "label": "person", "conf": 0.9, "bbox": [142.28, 206.76, 528.18, 479.56] }
+    ]
+  },
+  {
+    "timestamp": 1762610561.8404787,
+    "frame_id": 66,
+    "stream_name": "webcam",
+    "latency_ms": 58.4,
+    "detections": [
+      { "label": "person", "conf": 0.9, "bbox": [146.36, 207.8, 527.98, 479.53] }
+    ]
+  },
+  {
+    "timestamp": 1762610562.41824,
+    "frame_id": 67,
+    "stream_name": "webcam",
+    "latency_ms": 106.8,
+    "detections": [
+      { "label": "person", "conf": 0.89, "bbox": [138.57, 207.2, 523.7, 479.45] }
+    ]
+  },
+  {
+    "timestamp": 1762610563.0461445,
+    "frame_id": 68,
+    "stream_name": "webcam",
+    "latency_ms": 54.5,
+    "detections": [
+      { "label": "person", "conf": 0.87, "bbox": [150.57, 199.55, 534.79, 479.64] }
+    ]
+  },
+  {
+    "timestamp": 1762610564.0686815,
+    "frame_id": 69,
+    "stream_name": "webcam",
+    "latency_ms": 55.2,
+    "detections": [
+      { "label": "person", "conf": 0.81, "bbox": [133.75, 190.5, 549.24, 479.67] }
+    ]
+  }
+]

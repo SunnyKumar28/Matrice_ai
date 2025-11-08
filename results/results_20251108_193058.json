@@ -1,0 +1,122 @@
+[
+  {
+    "timestamp": 1762610346.809931,
+    "frame_id": 0,
+    "stream_name": "video_1",
+    "latency_ms": 259.8,
+    "detections": [
+      { "label": "person", "conf": 0.69, "bbox": [2160.64, 1202.58, 2696.08, 1809.06] },
+      { "label": "car", "conf": 0.66, "bbox": [6.28, 933.12, 3840.0, 2160.0] },
+      { "label": "car", "conf": 0.46, "bbox": [332.84, 914.36, 738.43, 1110.83] }
+    ]
+  },
+  {
+    "timestamp": 1762610358.5033667,
+    "frame_id": 1,
+    "stream_name": "video_1",
+    "latency_ms": 49.0,
+    "detections": [
+      { "label": "car", "conf": 0.66, "bbox": [9.09, 933.76, 3840.0, 2160.0] },
+      { "label": "person", "conf": 0.66, "bbox": [2152.34, 1202.65, 2696.36, 1808.69] },
+      { "label": "car", "conf": 0.43, "bbox": [305.47, 912.85, 711.39, 1118.48] },
+      { "label": "car", "conf": 0.31, "bbox": [2.76, 915.85, 700.18, 1270.13] }
+    ]
+  },
+  {
+    "timestamp": 1762610369.4437268,
+    "frame_id": 2,
+    "stream_name": "video_1",
+    "latency_ms": 60.4,
+    "detections": [
+      { "label": "car", "conf": 0.64, "bbox": [8.5, 934.28, 3840.0, 2160.0] },
+      { "label": "person", "conf": 0.6, "bbox": [2130.55, 1201.91, 2697.08, 1806.91] }
+    ]
+  },
+  {
+    "timestamp": 1762610379.6576614,
+    "frame_id": 3,
+    "stream_name": "video_1",
+    "latency_ms": 104.7,
+    "detections": [
+      { "label": "person", "conf": 0.66, "bbox": [2170.39, 1202.41, 2697.24, 1806.74] },
+      { "label": "car", "conf": 0.64, "bbox": [6.89, 934.82, 3840.0, 2156.95] }
+    ]
+  },
+  {
+    "timestamp": 1762610391.2331793,
+    "frame_id": 4,
+    "stream_name": "video_1",
+    "latency_ms": 50.3,
+    "detections": [
+      { "label": "person", "conf": 0.67, "bbox": [2170.45, 1201.49, 2698.76, 1805.56] },
+      { "label": "car", "conf": 0.6, "bbox": [8.65, 932.68, 3840.0, 2155.37] },
+      { "label": "car", "conf": 0.26, "bbox": [156.51, 917.84, 570.83, 1105.29] }
+    ]
+  },
+  {
+    "timestamp": 1762610401.9644918,
+    "frame_id": 5,
+    "stream_name": "video_1",
+    "latency_ms": 50.3,
+    "detections": [
+      { "label": "person", "conf": 0.7, "bbox": [2172.02, 1203.28, 2695.81, 1805.31] },
+      { "label": "car", "conf": 0.59, "bbox": [5.36, 930.63, 3840.0, 2154.71] },
+      { "label": "car", "conf": 0.35, "bbox": [98.44, 915.81, 557.92, 1076.18] }
+    ]
+  },
+  {
+    "timestamp": 1762610412.3143125,
+    "frame_id": 6,
+    "stream_name": "video_1",
+    "latency_ms": 79.1,
+    "detections": [
+      { "label": "person", "conf": 0.66, "bbox": [2172.49, 1203.49, 2694.09, 1803.17] },
+      { "label": "car", "conf": 0.6, "bbox": [6.14, 929.67, 3840.0, 2156.6] },
+      { "label": "car", "conf": 0.29, "bbox": [70.42, 913.22, 526.18, 1082.1] }
+    ]
+  },
+  {
+    "timestamp": 1762610423.5077996,
+    "frame_id": 7,
+    "stream_name": "video_1",
+    "latency_ms": 65.6,
+    "detections": [
+      { "label": "person", "conf": 0.65, "bbox": [2170.53, 1203.07, 2694.75, 1801.09] },
+      { "label": "car", "conf": 0.6, "bbox": [9.39, 929.74, 3840.0, 2155.88] },
+      { "label": "car", "conf": 0.38, "bbox": [49.46, 910.11, 500.08, 1078.27] }
+    ]
+  },
+  {
+    "timestamp": 1762610434.706162,
+    "frame_id": 8,
+    "stream_name": "video_1",
+    "latency_ms": 74.0,
+    "detections": [
+      { "label": "person", "conf": 0.67, "bbox": [2170.47, 1203.32, 2694.11, 1800.54] },
+      { "label": "car", "conf": 0.59, "bbox": [11.48, 929.08, 3840.0, 2155.15] },
+      { "label": "car", "conf": 0.4, "bbox": [3.41, 911.82, 461.74, 1263.32] },
+      { "label": "car", "conf": 0.26, "bbox": [15.53, 909.46, 465.78, 1069.42] }
+    ]
+  },
+  {
+    "timestamp": 1762610446.0287902,
+    "frame_id": 9,
+    "stream_name": "video_1",
+    "latency_ms": 53.9,
+    "detections": [
+      { "label": "person", "conf": 0.7, "bbox": [2172.41, 1203.08, 2696.98, 1798.75] },
+      { "label": "car", "conf": 0.61, "bbox": [13.13, 929.58, 3840.0, 2154.17] },
+      { "label": "car", "conf": 0.37, "bbox": [2.32, 913.08, 455.28, 1260.98] }
+    ]
+  },
+  {
+    "timestamp": 1762610458.7695115,
+    "frame_id": 10,
+    "stream_name": "video_1",
+    "latency_ms": 62.5,
+    "detections": [
+      { "label": "person", "conf": 0.73, "bbox": [2174.66, 1203.92, 2698.17, 1799.26] },
+      { "label": "car", "conf": 0.61, "bbox": [5.75, 928.15, 3840.0, 2153.52] }
+    ]
+  }
+]
