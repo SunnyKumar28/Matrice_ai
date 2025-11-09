@@ -11,6 +11,32 @@ This system implements a streaming inference pipeline that:
 - Achieves low end-to-end latency and high sustainable FPS
 - Maintains stable, predictable performance under variable load
 
+## Sample Video and Results
+
+### Test Video
+A sample video has been processed with this system to demonstrate its capabilities. The test video shows person and car detection in a real-world scenario.
+
+**Sample Video:** [Download from Google Drive](https://drive.google.com/file/d/1WlIY0izOAht43-q3uo3w1gCfRU1FS4DS/view?usp=drive_link)
+
+### Sample Output
+
+**Sample Results File:** `results/video_1_results.json`
+
+You can view the complete inference output in the included JSON file, which shows:
+```json
+{
+  "timestamp": 1762610346.809931,
+  "frame_id": 0,
+  "stream_name": "video_1",
+  "latency_ms": 259.8,
+  "detections": [
+    { "label": "person", "conf": 0.69, "bbox": [2160.64, 1202.58, 2696.08, 1809.06] },
+    { "label": "car", "conf": 0.66, "bbox": [6.28, 933.12, 3840.0, 2160.0] },
+    { "label": "car", "conf": 0.46, "bbox": [332.84, 914.36, 738.43, 1110.83] }
+  ]
+}
+```
+
 ## System Requirements
 
 - Python 3.8+
@@ -65,6 +91,9 @@ python client.py --server http://localhost:8000 --source rtsp://example.com/stre
 
 # With FPS limit
 python client.py --server http://localhost:8000 --source 0 --max-fps 30
+
+# Process the sample video
+python client.py --server http://localhost:8000 --source path/to/sample_video.mp4 --stream-name video_1
 ```
 
 **Arguments:**
