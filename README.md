@@ -11,42 +11,14 @@ This system implements a streaming inference pipeline that:
 - Achieves low end-to-end latency and high sustainable FPS
 - Maintains stable, predictable performance under variable load
 
-## How to Run the System
-
-### Quick Start
-
-**1. Start the Server**
-
-```bash
-python server.py --host 0.0.0.0 --port 8000 --model yolov8n.pt --device auto
-```
-
-**2. Run the Client**
-
-```bash
-# Process webcam feed
-python client.py --server http://localhost:8000 --source 0 --stream-name webcam
-
-# Process video file
-python client.py --server http://localhost:8000 --source video.mp4 --stream-name video_1
-
-# Process RTSP stream
-python client.py --server http://localhost:8000 --source rtsp://example.com/stream --stream-name cam_1
-```
-
-**3. Check Results**
-
-Results are automatically saved to `results/` directory as JSON files.
-
-### Detailed Setup Instructions
-
-#### Prerequisites
+## System Requirements
 
 - Python 3.8+
 - 4GB+ RAM recommended
-- GPU optional (CPU works, GPU significantly faster)
+- CUDA-capable GPU (optional, for GPU acceleration)
+- Network connectivity (for RTSP streams)
 
-#### Installation Steps
+## Installation
 
 1. **Clone the repository:**
    ```bash
@@ -59,15 +31,53 @@ Results are automatically saved to `results/` directory as JSON files.
    pip install -r requirements.txt
    ```
 
-3. **Start the server:**
+3. **Download YOLOv8 model (optional):**
    ```bash
-   python server.py --host 0.0.0.0 --port 8000
+   # Models are downloaded automatically by ultralytics on first run
+   # Available models: yolov8n.pt, yolov8s.pt, yolov8m.pt, yolov8l.pt, yolov8x.pt
    ```
 
-4. **In another terminal, run the client:**
-   ```bash
-   python client.py --server http://localhost:8000 --source 0 --stream-name webcam
-   ```
+## Quick Start
+
+### 1. Start the Server
+
+```bash
+python server.py --host 0.0.0.0 --port 8000 --model yolov8n.pt --device auto
+```
+
+**Arguments:**
+- `--host`: Host to bind to (default: 0.0.0.0)
+- `--port`: Port to bind to (default: 8000)
+- `--model`: Path to YOLOv8 model file (default: yolov8n.pt)
+- `--device`: Device to run inference on - auto/cpu/cuda/mps (default: auto)
+
+### 2. Run the Client
+
+```bash
+# Process webcam feed
+python client.py --server http://localhost:8000 --source 0 --stream-name webcam
+
+# Process video file
+python client.py --server http://localhost:8000 --source video.mp4 --stream-name video_1
+
+# Process RTSP stream
+python client.py --server http://localhost:8000 --source rtsp://example.com/stream --stream-name cam_1
+
+# With FPS limit
+python client.py --server http://localhost:8000 --source 0 --max-fps 30
+```
+
+**Arguments:**
+- `--server`: URL of the inference server (default: http://localhost:8000)
+- `--source`: Video source - RTSP URL, webcam index (0, 1, etc.), or video file path
+- `--stream-name`: Name of the stream (defaults to source)
+- `--output-dir`: Directory to save JSON results (default: results)
+- `--max-fps`: Maximum frames per second to process (optional)
+- `--no-save`: Don't save results to JSON files
+
+### 3. Check Results
+
+Results are automatically saved to `results/` directory as JSON files.
 
 ## Architecture Overview
 
@@ -151,7 +161,7 @@ The system consists of two main components that communicate via REST API:
 
 #### 2. Async Queue Architecture
 - **Decision:** Use async queue with thread pool executor
-- **Rationale:** 
+- **Rationale:**
   - FastAPI handles HTTP requests asynchronously (non-blocking)
   - Inference is CPU/GPU-bound, runs in separate threads
   - Queue buffers requests during high load
@@ -169,84 +179,11 @@ The system consists of two main components that communicate via REST API:
 
 #### 5. Client-Server Separation
 - **Decision:** Separate client and server processes
-- **Rationale:** 
+- **Rationale:**
   - Allows scaling server independently
   - Multiple clients can connect to one server
   - Client can run on different machines
 - **Impact:** Horizontal scalability, distributed processing capability
-
-## System Requirements
-
-- Python 3.8+
-- CUDA-capable GPU (optional, for GPU acceleration)
-- Sufficient RAM for video processing
-- Network connectivity (for RTSP streams)
-
-## Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd Matrice
-```
-
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-3. Download YOLOv8 model (optional, will be downloaded automatically on first run):
-```bash
-# Models are downloaded automatically by ultralytics
-# Available models: yolov8n.pt, yolov8s.pt, yolov8m.pt, yolov8l.pt, yolov8x.pt
-```
-
-## Usage
-
-### Starting the Server
-
-Start the inference server:
-
-```bash
-python server.py --host 0.0.0.0 --port 8000 --model yolov8n.pt --device auto
-```
-
-**Arguments:**
-- `--host`: Host to bind to (default: 0.0.0.0)
-- `--port`: Port to bind to (default: 8000)
-- `--model`: Path to YOLOv8 model file (default: yolov8n.pt)
-- `--device`: Device to run inference on - auto/cpu/cuda/mps (default: auto)
-
-The server will automatically:
-- Load the YOLOv8 model once at startup
-- Start background inference processing
-- Provide REST API endpoints for inference requests
-
-### Running the Client
-
-Process a video stream:
-
-```bash
-# RTSP stream
-python client.py --server http://localhost:8000 --source rtsp://example.com/stream --stream-name cam_1
-
-# Webcam
-python client.py --server http://localhost:8000 --source 0 --stream-name webcam
-
-# Video file
-python client.py --server http://localhost:8000 --source video.mp4 --stream-name video_1
-
-# With FPS limit
-python client.py --server http://localhost:8000 --source 0 --max-fps 30
-```
-
-**Arguments:**
-- `--server`: URL of the inference server (default: http://localhost:8000)
-- `--source`: Video source - RTSP URL, webcam index (0, 1, etc.), or video file path
-- `--stream-name`: Name of the stream (defaults to source)
-- `--output-dir`: Directory to save JSON results (default: results)
-- `--max-fps`: Maximum frames per second to process (optional)
-- `--no-save`: Don't save results to JSON files
 
 ## API Endpoints
 
@@ -328,7 +265,7 @@ Results are saved to JSON files (one JSON object per line) with the following fo
 }
 ```
 
-## Scaling and Performance Considerations
+## Scaling and Performance
 
 ### Performance Characteristics
 
@@ -363,11 +300,10 @@ Results are saved to JSON files (one JSON object per line) with the following fo
 - **Resource Management:** Monitor memory, set queue limits, use CPU-only if GPU limited
 
 ### Monitoring
-Access metrics: `curl http://localhost:8000/metrics`
 
+Access metrics:
+```bash
+curl http://localhost:8000/metrics
+```
 
 Key metrics: Latency, throughput, queue size, error rate, resource usage
-
-\
-
-
